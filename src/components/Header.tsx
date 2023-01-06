@@ -1,8 +1,11 @@
+import { Box, Button, Drawer } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import React from 'react';
 import styled from 'styled-components';
 import { ReactComponent as Bell } from '../assets/svg/bell.svg'
 import { ReactComponent as Search } from '../assets/svg/search.svg'
+import { ReactComponent as MenuAltOne } from '../assets/svg/menu-alt-1.svg'
+import Sidebar from './Sidebar';
 
 const Container = styled.div`
   display: flex;
@@ -25,7 +28,7 @@ const Logo = styled.img`
 `;
 
 const SearchBar = styled.div`
-  width: 300px;
+  width: 25vw;
   background-color: #F9FAFB;
   border-radius: 10px;
   display: flex;
@@ -53,20 +56,57 @@ const TopRight = styled.div`
   padding: 0px 15px;
 `;
 
-const Header = () => (
-  <Container>
-    <TopLeft>
-      <Logo src="https://i.imgur.com/YPxLqnI.png" />
-      <SearchBar>
-        <Search />
-        <Input placeholder="Search" />
-      </SearchBar>
-    </TopLeft>
-    <TopRight>
-      <Bell />
-      <Avatar alt="User Image" src="https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/475.jpg" sx={{height: '30px', width: '30px', marginLeft: '10px'}} />
-    </TopRight>
-  </Container>
-);
+const Header = () => {
+
+  const [state, setState] = React.useState({
+    left: false
+  });
+
+  const toggleDrawer =
+    (open: boolean) =>
+      (event: React.KeyboardEvent | React.MouseEvent) => {
+        if (
+          event.type === 'keydown' &&
+          ((event as React.KeyboardEvent).key === 'Tab' ||
+            (event as React.KeyboardEvent).key === 'Shift')
+        ) {
+          return;
+        }
+
+        setState({ ...state, "left": open });
+      };
+
+
+
+  return (
+    <Container>
+      <TopLeft>
+        <div>
+          {(['left'] as const).map((anchor) => (
+            <React.Fragment key={anchor}>
+              <Box component={Button} onClick={toggleDrawer(true)} display={{md: 'none'}}><MenuAltOne /></Box>
+              <Drawer
+                anchor={anchor}
+                open={state[anchor]}
+                onClose={toggleDrawer(false)}
+              >
+                <Sidebar />
+              </Drawer>
+            </React.Fragment>
+          ))}
+        </div>
+        <Logo src="https://i.imgur.com/YPxLqnI.png" />
+        <SearchBar>
+          <Search />
+          <Input placeholder="Search" />
+        </SearchBar>
+      </TopLeft>
+      <TopRight>
+        <Bell />
+        <Avatar alt="User Image" src="https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/475.jpg" sx={{ height: '30px', width: '30px', marginLeft: '10px' }} />
+      </TopRight>
+    </Container>
+  )
+};
 
 export default Header;

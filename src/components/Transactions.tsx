@@ -9,7 +9,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import styled from 'styled-components';
 import axios from 'axios';
-import { Chip } from '@mui/material';
+import { Box, Chip } from '@mui/material';
 
 const Container = styled.div`
   background-color: #FFFFFF;
@@ -81,8 +81,8 @@ export default function CustomizedTables() {
             <TableRow>
               <StyledTableCell>TRANSACTION</StyledTableCell>
               <StyledTableCell>DATE & TIME</StyledTableCell>
-              <StyledTableCell>AMOUNT</StyledTableCell>
-              <StyledTableCell>STATUS</StyledTableCell>
+              <Box component={StyledTableCell} display={{xs: 'none', md: 'table-cell'}}>AMOUNT</Box>
+              <Box component={StyledTableCell} display={{xs: 'none', md: 'table-cell'}}>STATUS</Box>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -95,14 +95,14 @@ export default function CustomizedTables() {
                     Payment from <b>{`${item.firstName} ${item.lastName}`}</b>
                   </StyledTableCell>
                   <StyledTableCell >{date.toLocaleString('default', { month: 'short', day:'numeric', year: 'numeric' })}</StyledTableCell>
-                  <StyledTableCell ><b>${item.amount}</b></StyledTableCell>
-                  <StyledTableCell >
+                  <Box component={StyledTableCell} display={{xs: 'none', md: 'table-cell'}}><b>${item.amount}</b></Box>
+                  <Box component={StyledTableCell} display={{xs: 'none', md: 'table-cell'}}>
                     {
                       item.completed
                       ? <Chip label="Completed" color="success" variant="filled" />
                       : <Chip label="In progress" color="primary" variant="filled" />
                     }
-                  </StyledTableCell>
+                  </Box>
                 </StyledTableRow>
               )
             })}

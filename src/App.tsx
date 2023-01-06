@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import Transactions from './components/Transactions';
 import Chart from './components/Chart';
 import Footer from './components/Footer';
+import { Box } from '@mui/material';
 
 const Container = styled.div`
   background-color: #F9FAFB;
@@ -19,10 +20,10 @@ const App = () => {
     <div>
       <Header />
       <Grid container>
-        <Grid item xs={2}>
+        <Box component={Grid} item md={2} display={{xs: "none", md: "block"}}>
           <Sidebar />
-        </Grid>
-        <Grid item xs={10}>
+        </Box>
+        <Grid item xs={12} md={10}>
           <Container>
           <Grid container>
               <Grid item xs={12}>

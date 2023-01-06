@@ -28,7 +28,7 @@ const Separator = styled.div`
 `
 
 const StyledListItemText = styled(ListItemText)`
-  font-size: 1vw;
+  font-size: 16px;
   font-weight: 500 !important;
 `
 

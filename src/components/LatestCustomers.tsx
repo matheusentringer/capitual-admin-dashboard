@@ -57,7 +57,7 @@ const LatestCustomers = () => {
               </ListItemAvatar>
               <ListItemText
                 primary={item.name}
-                primaryTypographyProps={{fontWeight: "600", fontSize:"1.0vw"}}
+                primaryTypographyProps={{fontWeight: "600", fontSize:"16px"}}
                 secondary={item.email}
               />
             </ListItem>
