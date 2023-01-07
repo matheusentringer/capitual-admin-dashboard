@@ -50,17 +50,25 @@ const StyledTableRow = styledMui(TableRow)(({ theme }) => ({
   },
 }));
 
+interface Transactions {
+  createdAt: string;
+  firstName: string;
+  lastName: string;
+  amount: number;
+  completed: Boolean;
+  id: number;
+}
 
 export default function CustomizedTables() {
 
-  const [transactions, setTransactions] = React.useState<any[]>([])
+  const [transactions, setTransactions] = React.useState<Transactions[]>([])
   const maxShow = 6
 
   React.useEffect(() => {
     const getTransactions = async () => {
       try {
         const res = await axios.get("https://633740935327df4c43d22bb2.mockapi.io/api/v1/transactions")
-        setTransactions(res.data.sort((a: any, b: any) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf()))
+        setTransactions(res.data.sort((a: Transactions, b: Transactions) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf()))
       } catch (error) {
         console.log("n foi")
       }

@@ -26,9 +26,21 @@ const TitleContainer = styled.div`
   width: 100%;
 `
 
+interface Sales {
+  createdAt: string;
+  productName: string;
+  price: string;
+  id: number;
+}
+
+interface ChartPoint {
+  createdAt: string,
+  sales: Number
+}
+
 const Chart = () => {
 
-  const [sales, setSales] = useState<any[]>([])
+  const [sales, setSales] = useState<ChartPoint[]>([])
   const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
 
   function getWindowDimensions() {
@@ -55,28 +67,29 @@ const Chart = () => {
         const today = new Date('2022-09-23')
         const lastMonth = new Date(today.setMonth(today.getMonth() - 1));
         const res = await axios.get("https://633740935327df4c43d22bb2.mockapi.io/api/v1/sales")
-        const data = res.data.map((item: any) => {
-          return {
-            createdAt: item.createdAt.slice(0,10),
-            sales: parseFloat(item.price)
-          }
-        })
-          .sort((a: any, b: any) => new Date(a.createdAt).valueOf() - new Date(b.createdAt).valueOf())
-          .filter((item: any) => {
+        const data = res.data
+          .sort((a: Sales, b: Sales) => new Date(a.createdAt).valueOf() - new Date(b.createdAt).valueOf() )
+          .filter((item: Sales) => {
             let saleDay = new Date(item.createdAt)
             return saleDay > lastMonth;
           })
+          .map((item: Sales) => {
+            return {
+              createdAt: item.createdAt.slice(0,10),
+              sales: parseFloat(item.price)
+            }
+          })
 
-        let map = data.reduce((prev: any, next: any) => {
-          
-          if (next.createdAt in prev) {
-            prev[next.createdAt].sales += next.sales;
-          } else {
-            prev[next.createdAt] = next;
+          const groupedSales = new Map<string, number>();
+
+          for(const {createdAt, sales} of data) {
+            groupedSales.set(createdAt, (groupedSales.get(createdAt) || 0) + sales);
           }
-          return prev;
-        }, {});
-        setSales(Object.keys(map).map(createdAt => map[createdAt]))
+
+          const salesArray = Array.from(groupedSales, ([createdAt, sales]) => ({ createdAt, sales }));
+
+          setSales(salesArray)
+
       } catch (error) {
         console.log("n foi")
       }
@@ -84,7 +97,7 @@ const Chart = () => {
     getSales()
   }, [])
 
-  const formatXAxis = (tickItem: any) => {
+  const formatXAxis = (tickItem: Date) => {
     let date = new Date(tickItem);
     return date.toLocaleString('en-US', { timeZone: 'UTC', day: 'numeric', month: 'short' });
   }

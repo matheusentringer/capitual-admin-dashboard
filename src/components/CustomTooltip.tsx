@@ -1,4 +1,6 @@
 import React from 'react'
+import { TooltipProps } from 'recharts';
+import { NameType, ValueType } from 'recharts/types/component/DefaultTooltipContent';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -37,13 +39,16 @@ const DateText = styled.p`
   padding-bottom: 5px;
 `
 
-const formatDate = (tickItem: any) => {
+const formatDate = (tickItem: Date) => {
   let date = new Date(tickItem);
   return date.toLocaleString('en-US', { timeZone: 'UTC', month: 'short', day:'numeric', year: 'numeric' });
 }
 
-const CustomTooltip = ({ active, payload, label } : any) => {
+const CustomTooltip = ({ active, payload, label } : TooltipProps<ValueType, NameType> ) => {
   if (active && payload && payload.length) {
+    console.log(active)
+    console.log(payload)
+    console.log(label)
     return (
       <Container>
         <DateText>{`${formatDate(label)}`}</DateText>

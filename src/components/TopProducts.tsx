@@ -18,16 +18,24 @@ const PriceTag = styled.h3`
   color: #111827;
 `
 
+interface Products {
+  createdAt: string;
+  name: string;
+  description: string;
+  totalSales: number;
+  id: number;
+}
+
 const LatestCustomers = () => {
 
-  const [products, setProducts] = useState<any[]>([])
+  const [products, setProducts] = useState<Products[]>([])
   const maxShow = 6
 
   useEffect(() => {
     const getProducts = async () => {
       try {
         const res = await axios.get("https://633740935327df4c43d22bb2.mockapi.io/api/v1/products")
-        setProducts(res.data.sort((a: any, b: any) => parseFloat(b.totalSales) - parseFloat(a.totalSales)))
+        setProducts(res.data.sort((a: Products, b: Products) => b.totalSales - a.totalSales))
       } catch (error) {
         console.log("n foi")
       }

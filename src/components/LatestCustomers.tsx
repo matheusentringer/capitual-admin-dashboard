@@ -18,16 +18,26 @@ const PriceTag = styled.h3`
   color: #111827;
 `
 
+interface Users {
+  createdAt: string;
+  name: string;
+  avatar: string;
+  email: string;
+  lastPurchaseValue: string;
+  lastPurchaseDate: string;
+  id: number;
+}
+
 const LatestCustomers = () => {
 
-  const [users, setUsers] = useState<any[]>([])
+  const [users, setUsers] = useState<Users[]>([])
   const maxShow = 6
 
   useEffect(() => {
     const getUsers = async () => {
       try {
         const res = await axios.get("https://633740935327df4c43d22bb2.mockapi.io/api/v1/users")
-        setUsers(res.data.sort((a: any, b: any) => new Date(b.lastPurchaseDate).valueOf() - new Date(a.lastPurchaseDate).valueOf()))
+        setUsers(res.data.sort((a: Users, b: Users) => new Date(b.lastPurchaseDate).valueOf() - new Date(a.lastPurchaseDate).valueOf()))
       } catch (error) {
         console.log("n foi")
       }
