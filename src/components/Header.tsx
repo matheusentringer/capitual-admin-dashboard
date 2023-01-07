@@ -6,6 +6,7 @@ import { ReactComponent as Bell } from '../assets/svg/bell.svg'
 import { ReactComponent as Search } from '../assets/svg/search.svg'
 import { ReactComponent as MenuAltOne } from '../assets/svg/menu-alt-1.svg'
 import Sidebar from './Sidebar';
+import LogoPNG from '../assets/images/logo.png'
 
 const Container = styled.div`
   display: flex;
@@ -19,12 +20,21 @@ const TopLeft = styled.div`
   display: flex;
   flex: 1;
   flex-direction: row;
+  align-items: center;
 `;
 
 const Logo = styled.img`
   height: 33px;
   width: 35px;
   padding: 0px 20px;
+
+  @media (max-width: 600px) {
+    display: none;
+  }
+
+  @media (max-width: 900px) {
+    padding: 0px 0px 0px 20px;
+  }
 `;
 
 const SearchBar = styled.div`
@@ -35,6 +45,10 @@ const SearchBar = styled.div`
   align-items: center;
   border: 1px solid #E5E7EB;
   padding: 5px;
+
+  @media (max-width: 900px) {
+    display: none;
+  }
 `;
 
 const Input = styled.input`
@@ -46,6 +60,7 @@ const Input = styled.input`
   border: none;
   appearance: none;
   outline: none;
+  padding-left: 10px;
 `;
 
 const TopRight = styled.div`
@@ -81,6 +96,7 @@ const Header = () => {
   return (
     <Container>
       <TopLeft>
+      <Logo src={LogoPNG} />
         <div>
           {(['left'] as const).map((anchor) => (
             <React.Fragment key={anchor}>
@@ -95,7 +111,6 @@ const Header = () => {
             </React.Fragment>
           ))}
         </div>
-        <Logo src="https://i.imgur.com/YPxLqnI.png" />
         <SearchBar>
           <Search />
           <Input placeholder="Search" />
