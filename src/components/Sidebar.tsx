@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -7,15 +7,15 @@ import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import styled from 'styled-components';
-import { ReactComponent as DocumentReport } from '../assets/svg/document-report.svg'
-import { ReactComponent as ShoppingBag } from '../assets/svg/shopping-bag.svg'
-import { ReactComponent as InboxIn } from '../assets/svg/inbox-in.svg'
-import { ReactComponent as LockClosed } from '../assets/svg/lock-closed.svg'
-import { ReactComponent as ClipboardList } from '../assets/svg/clipboard-list.svg'
-import { ReactComponent as Collection } from '../assets/svg/collection.svg'
-import { ReactComponent as Support } from '../assets/svg/support.svg'
-import { ReactComponent as ChartPie } from '../assets/svg/chart-pie.svg'
 import { ListItemSecondaryAction } from '@mui/material';
+import { ReactComponent as DocumentReport } from '../assets/svg/document-report.svg';
+import { ReactComponent as ShoppingBag } from '../assets/svg/shopping-bag.svg';
+import { ReactComponent as InboxIn } from '../assets/svg/inbox-in.svg';
+import { ReactComponent as LockClosed } from '../assets/svg/lock-closed.svg';
+import { ReactComponent as ClipboardList } from '../assets/svg/clipboard-list.svg';
+import { ReactComponent as Collection } from '../assets/svg/collection.svg';
+import { ReactComponent as Support } from '../assets/svg/support.svg';
+import { ReactComponent as ChartPie } from '../assets/svg/chart-pie.svg';
 
 const Container = styled.div`
   border-right: 1px solid #E5E7EB;
@@ -30,23 +30,23 @@ const Container = styled.div`
     width: 250px;
     height: 100vh;
   }
-`
+`;
 
 const Separator = styled.div`
   height: 1px;
   width: 100%;
   background-color: #E5E7EB;
   margin: 10px 0px;
-`
+`;
 
 const StyledListItemText = styled(ListItemText)`
   font-size: 16px;
   font-weight: 500 !important;
-`
+`;
 
 const StyledListItemIcon = styled(ListItemIcon)`
   min-width: 45px !important;
-`
+`;
 
 const Badge = styled.div`
   display: flex;
@@ -58,10 +58,9 @@ const Badge = styled.div`
   width: 20px;
   height: 20px;
   font-size: 14px;
-`
+`;
 
-const Sidebar = () => {
-  
+function Sidebar() {
   const [openPages, setOpenPages] = React.useState(false);
   const [openSales, setOpenSales] = React.useState(false);
   const [openAuth, setOpenAuth] = React.useState(false);
@@ -89,7 +88,7 @@ const Sidebar = () => {
           <StyledListItemIcon>
             <ChartPie />
           </StyledListItemIcon>
-          <StyledListItemText disableTypography primary="Overview" sx={{color: "#0E9F6E"}} />
+          <StyledListItemText disableTypography primary="Overview" sx={{ color: '#0E9F6E' }} />
         </ListItemButton>
 
         <ListItemButton onClick={handleClickPages}>
@@ -165,8 +164,8 @@ const Sidebar = () => {
           </List>
         </Collapse>
 
-        <Separator/>
-        
+        <Separator />
+
         <ListItemButton>
           <StyledListItemIcon>
             <ClipboardList />
@@ -188,9 +187,9 @@ const Sidebar = () => {
           <StyledListItemText disableTypography primary="Help" />
         </ListItemButton>
       </List>
-  
+
     </Container>
-  )
+  );
 }
 
-export default Sidebar
+export default Sidebar;

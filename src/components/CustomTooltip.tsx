@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { TooltipProps } from 'recharts';
 import { NameType, ValueType } from 'recharts/types/component/DefaultTooltipContent';
 import styled from 'styled-components';
@@ -16,35 +16,37 @@ const Dot = styled.div`
   background-color: #0E9F6E;
   width: 10px;
   height: 10px;
-`
+`;
 
 const SalesContainer = styled.div`
   display: flex;
   align-items: center;
-`
+`;
 
 const SalesText = styled.p`
   font-size: 20px;
   padding: 0px 10px;
-`
+`;
 
 const ValorText = styled.p`
   font-weight: 600;
   font-size: 20px;
-`
+`;
 
 const DateText = styled.p`
   font-weight: 500;
   font-size: 14px;
   padding-bottom: 5px;
-`
+`;
 
 const formatDate = (tickItem: Date) => {
-  let date = new Date(tickItem);
-  return date.toLocaleString('en-US', { timeZone: 'UTC', month: 'short', day:'numeric', year: 'numeric' });
-}
+  const date = new Date(tickItem);
+  return date.toLocaleString('en-US', {
+    timeZone: 'UTC', month: 'short', day: 'numeric', year: 'numeric',
+  });
+};
 
-const CustomTooltip = ({ active, payload, label } : TooltipProps<ValueType, NameType> ) => {
+function CustomTooltip({ active, payload, label } : TooltipProps<ValueType, NameType>) {
   if (active && payload && payload.length) {
     return (
       <Container>
@@ -59,6 +61,6 @@ const CustomTooltip = ({ active, payload, label } : TooltipProps<ValueType, Name
   }
 
   return null;
-};
+}
 
-export default CustomTooltip
+export default CustomTooltip;

@@ -21,7 +21,7 @@ const Container = styled.div`
 
 const ChartTitle = styled.h2`
   padding-right: 10px;
-`
+`;
 
 const TitleContainer = styled.div`
   display: flex;
@@ -29,20 +29,20 @@ const TitleContainer = styled.div`
   flex-direction: row;
   padding: 20px 0px 20px 20px;
   width: 100%;
-`
+`;
 
-const StyledTableCell = styledMui(TableCell)(({ theme }) => ({
+const StyledTableCell = styledMui(TableCell)(() => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: "#F9FAFB",
+    backgroundColor: '#F9FAFB',
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
   },
 }));
 
-const StyledTableRow = styledMui(TableRow)(({ theme }) => ({
+const StyledTableRow = styledMui(TableRow)(() => ({
   '&:nth-of-type(even)': {
-    backgroundColor: "#F9FAFB",
+    backgroundColor: '#F9FAFB',
   },
   // hide last border
   '&:last-child td, &:last-child th': {
@@ -60,21 +60,22 @@ interface Transactions {
 }
 
 export default function CustomizedTables() {
-
-  const [transactions, setTransactions] = React.useState<Transactions[]>([])
-  const maxShow = 6
+  const [transactions, setTransactions] = React.useState<Transactions[]>([]);
+  const maxShow = 6;
 
   React.useEffect(() => {
     const getTransactions = async () => {
-      try {
-        const res = await axios.get("https://633740935327df4c43d22bb2.mockapi.io/api/v1/transactions")
-        setTransactions(res.data.sort((a: Transactions, b: Transactions) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf()))
-      } catch (error) {
-        console.log("n foi")
-      }
-    }
-    getTransactions()
-  }, [])
+      const res = await axios.get('https://633740935327df4c43d22bb2.mockapi.io/api/v1/transactions');
+      setTransactions(res.data.sort(
+        (a: Transactions, b: Transactions) => {
+          const dateA = new Date(a.createdAt).valueOf();
+          const dateB = new Date(b.createdAt).valueOf();
+          return dateB - dateA;
+        },
+      ));
+    };
+    getTransactions();
+  }, []);
 
   return (
     <Container>
@@ -83,36 +84,43 @@ export default function CustomizedTables() {
           Transactions
         </ChartTitle>
       </TitleContainer>
-      <TableContainer component={Paper} sx={{marginRight: "10px"}}>
+      <TableContainer component={Paper} sx={{ marginRight: '10px' }}>
         <Table aria-label="customized table">
           <TableHead>
             <TableRow>
               <StyledTableCell>TRANSACTION</StyledTableCell>
               <StyledTableCell>DATE & TIME</StyledTableCell>
-              <Box component={StyledTableCell} display={{xs: 'none', md: 'table-cell'}}>AMOUNT</Box>
-              <Box component={StyledTableCell} display={{xs: 'none', md: 'table-cell'}}>STATUS</Box>
+              <Box component={StyledTableCell} display={{ xs: 'none', md: 'table-cell' }}>AMOUNT</Box>
+              <Box component={StyledTableCell} display={{ xs: 'none', md: 'table-cell' }}>STATUS</Box>
             </TableRow>
           </TableHead>
           <TableBody>
             {transactions.slice(0, maxShow).map((item) => {
-              let date = new Date(item.createdAt);
-              let key = `${item.lastName} ${item.id}`
+              const date = new Date(item.createdAt);
+              const key = `${item.lastName} ${item.id}`;
               return (
                 <StyledTableRow key={key}>
                   <StyledTableCell component="th" scope="row">
-                    Payment from <b>{`${item.firstName} ${item.lastName}`}</b>
+                    Payment from
+                    {' '}
+                    <b>{`${item.firstName} ${item.lastName}`}</b>
                   </StyledTableCell>
-                  <StyledTableCell >{date.toLocaleString('default', { month: 'short', day:'numeric', year: 'numeric' })}</StyledTableCell>
-                  <Box component={StyledTableCell} display={{xs: 'none', md: 'table-cell'}}><b>${item.amount}</b></Box>
-                  <Box component={StyledTableCell} display={{xs: 'none', md: 'table-cell'}}>
+                  <StyledTableCell>{date.toLocaleString('default', { month: 'short', day: 'numeric', year: 'numeric' })}</StyledTableCell>
+                  <Box component={StyledTableCell} display={{ xs: 'none', md: 'table-cell' }}>
+                    <b>
+                      $
+                      {item.amount}
+                    </b>
+                  </Box>
+                  <Box component={StyledTableCell} display={{ xs: 'none', md: 'table-cell' }}>
                     {
                       item.completed
-                      ? <Chip label="Completed" variant="filled" sx={{color: "#03543F", backgroundColor: "#DEF7EC"}} />
-                      : <Chip label="In progress" variant="filled" sx={{color: "#1E429F", backgroundColor: "#E1EFFE"}} />
+                        ? <Chip label="Completed" variant="filled" sx={{ color: '#03543F', backgroundColor: '#DEF7EC' }} />
+                        : <Chip label="In progress" variant="filled" sx={{ color: '#1E429F', backgroundColor: '#E1EFFE' }} />
                     }
                   </Box>
                 </StyledTableRow>
-              )
+              );
             })}
           </TableBody>
         </Table>

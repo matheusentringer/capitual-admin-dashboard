@@ -1,31 +1,31 @@
-import React from 'react'
-import Header from './components/Header'
+import React from 'react';
 import Grid from '@mui/material/Grid';
+import styled from 'styled-components';
+import { Box } from '@mui/material';
+import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import LatestCustomers from './components/LatestCustomers';
 import TopProducts from './components/TopProducts';
-import styled from 'styled-components';
 import Transactions from './components/Transactions';
 import Chart from './components/Chart';
 import Footer from './components/Footer';
-import { Box } from '@mui/material';
 
 const Container = styled.div`
   background-color: #F9FAFB;
   padding: 10px;
-`
+`;
 
-const App = () => {
+function App() {
   return (
     <div>
       <Header />
-      <Grid container sx={{ paddingTop: "60px" }} >
-        <Box component={Grid} item md={2} display={{xs: "none", lg: "block"}}>
+      <Grid container sx={{ paddingTop: '60px' }}>
+        <Box component={Grid} item md={2} display={{ xs: 'none', lg: 'block' }}>
           <Sidebar />
         </Box>
         <Grid item xs={12} lg={10}>
           <Container>
-          <Grid container>
+            <Grid container>
               <Grid item xs={12}>
                 <Chart />
               </Grid>
@@ -52,7 +52,7 @@ const App = () => {
         </Grid>
       </Grid>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

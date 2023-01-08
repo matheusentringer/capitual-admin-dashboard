@@ -2,11 +2,11 @@ import { Box, Button, Drawer } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import React from 'react';
 import styled from 'styled-components';
-import { ReactComponent as Bell } from '../assets/svg/bell.svg'
-import { ReactComponent as Search } from '../assets/svg/search.svg'
-import { ReactComponent as MenuAltOne } from '../assets/svg/menu-alt-1.svg'
+import { ReactComponent as Bell } from '../assets/svg/bell.svg';
+import { ReactComponent as Search } from '../assets/svg/search.svg';
+import { ReactComponent as MenuAltOne } from '../assets/svg/menu-alt-1.svg';
 import Sidebar from './Sidebar';
-import LogoPNG from '../assets/images/logo.png'
+import LogoPNG from '../assets/images/logo.png';
 
 const Container = styled.div`
   display: flex;
@@ -77,36 +77,31 @@ const TopRight = styled.div`
   padding: 0px 15px;
 `;
 
-const Header = () => {
-
+function Header() {
   const [state, setState] = React.useState({
-    left: false
+    left: false,
   });
 
-  const toggleDrawer =
-    (open: boolean) =>
-      (event: React.KeyboardEvent | React.MouseEvent) => {
-        if (
-          event.type === 'keydown' &&
-          ((event as React.KeyboardEvent).key === 'Tab' ||
-            (event as React.KeyboardEvent).key === 'Shift')
-        ) {
-          return;
-        }
+  const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+    if (
+      event.type === 'keydown'
+          && ((event as React.KeyboardEvent).key === 'Tab'
+            || (event as React.KeyboardEvent).key === 'Shift')
+    ) {
+      return;
+    }
 
-        setState({ ...state, "left": open });
-      };
-
-
+    setState({ ...state, left: open });
+  };
 
   return (
     <Container>
       <TopLeft>
-      <Logo src={LogoPNG} />
+        <Logo src={LogoPNG} />
         <div>
           {(['left'] as const).map((anchor) => (
             <React.Fragment key={anchor}>
-              <Box component={Button} onClick={toggleDrawer(true)} display={{lg: 'none'}}><MenuAltOne /></Box>
+              <Box component={Button} onClick={toggleDrawer(true)} display={{ lg: 'none' }}><MenuAltOne /></Box>
               <Drawer
                 anchor={anchor}
                 open={state[anchor]}
@@ -127,7 +122,7 @@ const Header = () => {
         <Avatar alt="User Image" src="https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/475.jpg" sx={{ height: '30px', width: '30px', marginLeft: '10px' }} />
       </TopRight>
     </Container>
-  )
-};
+  );
+}
 
 export default Header;

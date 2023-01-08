@@ -1,9 +1,11 @@
 import { IconButton, Tooltip as MuiTooltip } from '@mui/material';
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
-import { ResponsiveContainer, LineChart, XAxis, YAxis, Line, Tooltip, CartesianGrid } from 'recharts'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import {
+  ResponsiveContainer, LineChart, XAxis, YAxis, Line, Tooltip, CartesianGrid,
+} from 'recharts';
 import styled from 'styled-components';
-import { ReactComponent as ExclamationCircle } from '../assets/svg/exclamation-circle.svg'
+import { ReactComponent as ExclamationCircle } from '../assets/svg/exclamation-circle.svg';
 import CustomTooltip from './CustomTooltip';
 
 const Container = styled.div`
@@ -16,7 +18,7 @@ const Container = styled.div`
 
 const ChartTitle = styled.h2`
   padding-right: 10px;
-`
+`;
 
 const TitleContainer = styled.div`
   display: flex;
@@ -24,7 +26,7 @@ const TitleContainer = styled.div`
   flex-direction: row;
   padding: 20px 0px 20px 20px;
   width: 100%;
-`
+`;
 
 interface Sales {
   createdAt: string;
@@ -35,21 +37,20 @@ interface Sales {
 
 interface ChartPoint {
   createdAt: string,
-  sales: Number
+  totalSales: number
 }
 
-const Chart = () => {
-
-  const [sales, setSales] = useState<ChartPoint[]>([])
-  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
-
+function Chart() {
   function getWindowDimensions() {
     const { innerWidth: width, innerHeight: height } = window;
     return {
       width,
-      height
+      height,
     };
   }
+
+  const [sales, setSales] = useState<ChartPoint[]>([]);
+  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
 
   useEffect(() => {
     function handleResize() {
@@ -62,46 +63,40 @@ const Chart = () => {
 
   useEffect(() => {
     const getSales = async () => {
+      const today = new Date('2022-09-23');
+      const lastMonth = new Date(today.setMonth(today.getMonth() - 1));
+      const res = await axios.get('https://633740935327df4c43d22bb2.mockapi.io/api/v1/sales');
+      const data = res.data
+        .sort(
+          (a: Sales, b: Sales) => new Date(a.createdAt).valueOf() - new Date(b.createdAt).valueOf(),
+        )
+        .filter((item: Sales) => {
+          const saleDay = new Date(item.createdAt);
+          return saleDay > lastMonth;
+        })
+        .map((item: Sales) => ({
+          createdAt: item.createdAt.slice(0, 10),
+          totalSales: parseFloat(item.price),
+        }));
 
-      try {
-        const today = new Date('2022-09-23')
-        const lastMonth = new Date(today.setMonth(today.getMonth() - 1));
-        const res = await axios.get("https://633740935327df4c43d22bb2.mockapi.io/api/v1/sales")
-        const data = res.data
-          .sort((a: Sales, b: Sales) => new Date(a.createdAt).valueOf() - new Date(b.createdAt).valueOf() )
-          .filter((item: Sales) => {
-            let saleDay = new Date(item.createdAt)
-            return saleDay > lastMonth;
-          })
-          .map((item: Sales) => {
-            return {
-              createdAt: item.createdAt.slice(0,10),
-              sales: parseFloat(item.price)
-            }
-          })
+      const groupedSales = data.reduce(
+        (map: Map<string, number>, next: ChartPoint) => map
+          .set(next.createdAt, (map.get(next.createdAt) || 0) + next.totalSales),
+        new Map<string, number>(),
+      );
 
-          const groupedSales = new Map<string, number>();
+      const salesArray = Array
+        .from(groupedSales, ([createdAt, totalSales]) => ({ createdAt, totalSales }));
 
-          for(const {createdAt, sales} of data) {
-            groupedSales.set(createdAt, (groupedSales.get(createdAt) || 0) + sales);
-          }
-
-          const salesArray = Array.from(groupedSales, ([createdAt, sales]) => ({ createdAt, sales }));
-
-          setSales(salesArray)
-
-      } catch (error) {
-        console.log("n foi")
-      }
-    }
-    getSales()
-  }, [])
+      setSales(salesArray);
+    };
+    getSales();
+  }, []);
 
   const formatXAxis = (tickItem: Date) => {
-    let date = new Date(tickItem);
+    const date = new Date(tickItem);
     return date.toLocaleString('en-US', { timeZone: 'UTC', day: 'numeric', month: 'short' });
-  }
-  
+  };
   return (
     <Container>
       <TitleContainer>
@@ -114,29 +109,29 @@ const Chart = () => {
           </IconButton>
         </MuiTooltip>
       </TitleContainer>
-      <ResponsiveContainer width="100%" aspect={windowDimensions.width < 600 ? 1 : 4/1}>
+      <ResponsiveContainer width="100%" aspect={windowDimensions.width < 600 ? 1 : 4 / 1}>
         <LineChart data={sales}>
           <XAxis
-            dataKey={"createdAt"}
+            dataKey="createdAt"
             tickFormatter={formatXAxis}
             axisLine={false}
             tickLine={false}
             angle={windowDimensions.width < 600 ? -35 : 0}
-            tick={windowDimensions.width < 600 ? {dy: 5} : {dy: 0}}
+            tick={windowDimensions.width < 600 ? { dy: 5 } : { dy: 0 }}
           />
           <YAxis
             axisLine={false}
             tickLine={false}
-            hide={windowDimensions.width < 600 ? true : false}
-            tick={{dx: -10}}
+            hide={windowDimensions.width < 600}
+            tick={{ dx: -10 }}
           />
           <Tooltip content={<CustomTooltip />} />
           <CartesianGrid stroke="#F3F4F6" vertical={false} />
-          <Line type="monotone" dataKey="sales" stroke="#0E9F6E" strokeWidth={3} dot={false} />
+          <Line type="monotone" dataKey="totalSales" stroke="#0E9F6E" strokeWidth={3} dot={false} />
         </LineChart>
       </ResponsiveContainer>
     </Container>
-  )
+  );
 }
 
-export default Chart
+export default Chart;
