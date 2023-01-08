@@ -19,11 +19,11 @@ const App = () => {
   return (
     <div>
       <Header />
-      <Grid container>
-        <Box component={Grid} item md={2} display={{xs: "none", md: "block"}}>
+      <Grid container sx={{ paddingTop: "60px" }} >
+        <Box component={Grid} item md={2} display={{xs: "none", lg: "block"}}>
           <Sidebar />
         </Box>
-        <Grid item xs={12} md={10}>
+        <Grid item xs={12} lg={10}>
           <Container>
           <Grid container>
               <Grid item xs={12}>
@@ -31,10 +31,10 @@ const App = () => {
               </Grid>
             </Grid>
             <Grid container spacing={1}>
-              <Grid item xs={12} md={4}>
+              <Grid item xs={12} xl={4} lg={5}>
                 <LatestCustomers />
               </Grid>
-              <Grid item xs={12} md={8}>
+              <Grid item xs={12} xl={8} lg={7}>
                 <TopProducts />
               </Grid>
             </Grid>

@@ -14,6 +14,12 @@ const Container = styled.div`
   align-items: center;
   height: 60px;
   border-bottom: 1px solid #E5E7EB;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+  background-color: white;
 `;
 
 const TopLeft = styled.div`

@@ -46,9 +46,6 @@ const formatDate = (tickItem: Date) => {
 
 const CustomTooltip = ({ active, payload, label } : TooltipProps<ValueType, NameType> ) => {
   if (active && payload && payload.length) {
-    console.log(active)
-    console.log(payload)
-    console.log(label)
     return (
       <Container>
         <DateText>{`${formatDate(label)}`}</DateText>

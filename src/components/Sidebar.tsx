@@ -15,10 +15,22 @@ import { ReactComponent as ClipboardList } from '../assets/svg/clipboard-list.sv
 import { ReactComponent as Collection } from '../assets/svg/collection.svg'
 import { ReactComponent as Support } from '../assets/svg/support.svg'
 import { ReactComponent as ChartPie } from '../assets/svg/chart-pie.svg'
+import { ListItemSecondaryAction } from '@mui/material';
 
 const Container = styled.div`
   border-right: 1px solid #E5E7EB;
-  height: calc(100vh - 65px);;
+  height: calc(100vh - 60px);
+  position: fixed;
+  /* top: 60px; */
+  left: 0;
+  z-index: 998;
+  background-color: white;
+  width: 16.666%;
+
+  @media (max-width: 900px) {
+    width: 250px;
+    height: 100vh;
+  }
 `
 
 const Separator = styled.div`
@@ -34,6 +46,18 @@ const StyledListItemText = styled(ListItemText)`
 
 const StyledListItemIcon = styled(ListItemIcon)`
   min-width: 45px !important;
+`
+
+const Badge = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: #FBD5D5;
+  color: #9B1C1C;
+  width: 20px;
+  height: 20px;
+  font-size: 14px;
 `
 
 const Sidebar = () => {
@@ -115,6 +139,9 @@ const Sidebar = () => {
             <InboxIn />
           </StyledListItemIcon>
           <StyledListItemText disableTypography primary="Messages" />
+          <ListItemSecondaryAction>
+            <Badge>1</Badge>
+          </ListItemSecondaryAction>
         </ListItemButton>
 
         <ListItemButton onClick={handleClickAuth}>
