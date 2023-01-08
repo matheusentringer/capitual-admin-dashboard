@@ -107,8 +107,8 @@ export default function CustomizedTables() {
                   <Box component={StyledTableCell} display={{xs: 'none', md: 'table-cell'}}>
                     {
                       item.completed
-                      ? <Chip label="Completed" color="success" variant="filled" />
-                      : <Chip label="In progress" color="primary" variant="filled" />
+                      ? <Chip label="Completed" variant="filled" sx={{color: "#03543F", backgroundColor: "#DEF7EC"}} />
+                      : <Chip label="In progress" variant="filled" sx={{color: "#1E429F", backgroundColor: "#E1EFFE"}} />
                     }
                   </Box>
                 </StyledTableRow>

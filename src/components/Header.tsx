@@ -106,7 +106,7 @@ const Header = () => {
         <div>
           {(['left'] as const).map((anchor) => (
             <React.Fragment key={anchor}>
-              <Box component={Button} onClick={toggleDrawer(true)} display={{md: 'none'}}><MenuAltOne /></Box>
+              <Box component={Button} onClick={toggleDrawer(true)} display={{lg: 'none'}}><MenuAltOne /></Box>
               <Drawer
                 anchor={anchor}
                 open={state[anchor]}

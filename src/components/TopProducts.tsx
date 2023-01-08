@@ -13,9 +13,19 @@ const Container = styled.div`
 const Line = styled.div`
 `;
 
-const PriceTag = styled.h3`
+const PriceTag = styled.div`
+  display: flex;
+  flex-direction: row;
+`
+
+const PriceTagNumber = styled.div`
   font-weight: 600;
   color: #111827;
+`
+
+const PriceTagText = styled.div`
+  font-weight: 400;
+  color: #4B5563;
 `
 
 interface Products {
@@ -56,7 +66,12 @@ const LatestCustomers = () => {
             <ListItem key={item.id}
               secondaryAction={
                 <PriceTag>
-                {Math.floor(item.totalSales)} sales
+                  <PriceTagNumber>
+                    {Math.floor(item.totalSales)}  
+                  </PriceTagNumber>
+                  <PriceTagText>
+                    &nbsp;sales
+                  </PriceTagText>
                 </PriceTag>
               }
             >

@@ -21,13 +21,12 @@ const Container = styled.div`
   border-right: 1px solid #E5E7EB;
   height: calc(100vh - 60px);
   position: fixed;
-  /* top: 60px; */
   left: 0;
   z-index: 998;
   background-color: white;
   width: 16.666%;
 
-  @media (max-width: 900px) {
+  @media (max-width: 1200px) {
     width: 250px;
     height: 100vh;
   }
@@ -37,6 +36,7 @@ const Separator = styled.div`
   height: 1px;
   width: 100%;
   background-color: #E5E7EB;
+  margin: 10px 0px;
 `
 
 const StyledListItemText = styled(ListItemText)`

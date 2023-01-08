@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const Container = styled.div`
   background-color: #FFFFFF;
   border-radius: 16px;
-  padding: 30px 10px;
+  padding: 40px 30px;
   margin-top: 10px;
   display: flex;
   justify-content: center;
