@@ -25,10 +25,14 @@ const ChartTitle = styled.h2`
 
 const TitleContainer = styled.div`
   display: flex;
-  align-items: center;
-  flex-direction: row;
-  padding: 20px 0px 20px 20px;
+  flex-direction: column;
+  padding: 20px 0px 20px 10px;
   width: 100%;
+`;
+
+const ChartSubTitle = styled.p`
+  font-size: 14px;
+  color: #71717A;
 `;
 
 const StyledTableCell = styledMui(TableCell)(() => ({
@@ -70,7 +74,7 @@ export default function CustomizedTables() {
         (a: Transactions, b: Transactions) => {
           const dateA = new Date(a.createdAt).valueOf();
           const dateB = new Date(b.createdAt).valueOf();
-          return dateB - dateA;
+          return dateA - dateB;
         },
       ));
     };
@@ -83,6 +87,9 @@ export default function CustomizedTables() {
         <ChartTitle>
           Transactions
         </ChartTitle>
+        <ChartSubTitle>
+          This is a list of latest transactions.
+        </ChartSubTitle>
       </TitleContainer>
       <TableContainer component={Paper} sx={{ marginRight: '10px' }}>
         <Table aria-label="customized table">
@@ -115,8 +122,8 @@ export default function CustomizedTables() {
                   <Box component={StyledTableCell} display={{ xs: 'none', md: 'table-cell' }}>
                     {
                       item.completed
-                        ? <Chip label="Completed" variant="filled" sx={{ color: '#03543F', backgroundColor: '#DEF7EC' }} />
-                        : <Chip label="In progress" variant="filled" sx={{ color: '#1E429F', backgroundColor: '#E1EFFE' }} />
+                        ? <Chip label="Completed" variant="filled" sx={{ color: '#03543F', backgroundColor: '#DEF7EC', fontWeight: '500' }} />
+                        : <Chip label="In progress" variant="filled" sx={{ color: '#1E429F', backgroundColor: '#E1EFFE', fontWeight: '500' }} />
                     }
                   </Box>
                 </StyledTableRow>
