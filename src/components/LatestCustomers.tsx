@@ -15,7 +15,7 @@ const Container = styled.div`
 const Line = styled.div`
 `;
 
-const PriceTag = styled.h3`
+const PriceTag = styled.div`
   font-weight: 600;
   color: #111827;
 `;
