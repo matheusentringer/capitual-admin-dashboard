@@ -4,10 +4,6 @@
 
 Teste ao candidato à vaga de desenvolvedor Frontend da Capitual.
 
-A aplicação pode ser acessada através do seguinte <i>link</i>:
-
-http://152.70.215.14/
-
 ## 📜 Descrição
 
 <b>Objetivos:</b>
